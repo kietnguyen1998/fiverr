@@ -1,0 +1,30 @@
+ .slick-next {
+    background: initial !important;
+    right: -24px !important;
+    width: 48px !important;
+    height: 43px !important;
+   
+}
+.slick-next::before {
+    color: black !important;
+    font-size: 50px !important;
+}
+
+
+
+.slick-prev {
+    
+   
+    height: 43px !important;
+    z-index: 10 !important;
+}
+.slick-prev::before {
+    color: black !important;
+    font-size: 50px !important;
+}
+
+
+
+.slick-dots li {
+    display: none !important;
+}
