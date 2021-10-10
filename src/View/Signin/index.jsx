@@ -15,15 +15,15 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { NavLink } from "react-router-dom";
 
 const schema = yup.object().shape({
-  taiKhoan: yup.string().required("Tên tài khoản bắt buộc nhập "),
-  matKhau: yup.string().required("Mật khẩu bắt buộc nhập"),
+  email: yup.string().required("Tên tài khoản bắt buộc nhập "),
+  password: yup.string().required("Mật khẩu bắt buộc nhập"),
 });
 const Signin = (props) => {
   const dispatch = useDispatch();
   const formik = useFormik({
     initialValues: {
-      taiKhoan: "",
-      matKhau: "",
+      email: "",
+      password: "",
     },
     validateOnMount: true,
     validationSchema: schema,
@@ -31,8 +31,8 @@ const Signin = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     formik.setTouched({
-      taiKhoan: true,
-      matKhau: true,
+      email: true,
+      password: true,
     });
     if (!formik.isValid) return;
     dispatch(
@@ -61,25 +61,25 @@ const Signin = (props) => {
         <form onSubmit={handleSubmit}>
           <TextField
             fullWidth
-            name="taiKhoan"
-            label="Tài khoản"
+            name="email"
+            label="Email"
             variant="outlined"
             onChange={formik.handleChange}
           />
-          {formik.touched.taiKhoan && (
-            <Typography color="error">{formik.errors.taiKhoan}</Typography>
+          {formik.touched.email && (
+            <Typography color="error">{formik.errors.email}</Typography>
           )}
           <TextField
             fullWidth
-            name="matKhau"
+            name="password"
             type="password"
-            label="Mật khẩu"
+            label="Password"
             variant="outlined"
             onChange={formik.handleChange}
             style={{ marginTop: 10 }}
           />
-          {formik.touched.matKhau && (
-            <Typography color="error">{formik.errors.matKhau}</Typography>
+          {formik.touched.password && (
+            <Typography color="error">{formik.errors.password}</Typography>
           )}
 
           <Button

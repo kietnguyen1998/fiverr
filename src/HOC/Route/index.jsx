@@ -25,4 +25,3 @@ const createRoute = (condition) => {
   };
 };
 export const AuthRoute = createRoute(() => !localStorage.getItem("t"));
-export const PrivateRoute = createRoute(() => localStorage.getItem("t"));

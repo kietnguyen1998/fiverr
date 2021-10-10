@@ -1,6 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
+import {
+  MuiPickersUtilsProvider,
+  KeyboardDatePicker,
+} from "@material-ui/pickers";
+import DateFnsUtils from "@date-io/date-fns";
+import { format } from "date-fns";
+import useStyle from "./style";
+
 // import axios from "axios";
 import {
   Avatar,
@@ -13,59 +21,86 @@ import {
 import AddCircleOutlineOutlinedIcon from "@material-ui/icons/AddCircleOutlineOutlined";
 import { useHistory } from "react-router-dom";
 const schema = yup.object().shape({
-  taiKhoan: yup.string().required("Tên tài khoản bắt buộc nhập "),
-  matKhau: yup.string().required("Mật khẩu bắt buộc nhập"),
-  hoTen: yup.string().required("Họ tên bắt buộc nhập"),
-  email: yup
+  first_name: yup.string().required("First name is required"),
+  last_name: yup.string().required("Last name is required"),
+  email: yup.string().required("Email is required").email("Email is invalid"),
+  phone: yup
     .string()
-    .required("Email bắt buộc nhập")
-    .email("Email không hợp lệ"),
-  soDt: yup
-    .string()
-    .required("Số DT bắt buộc nhập")
-    .matches(/^[0-9]+$/g, "Điện thoại phải là số"),
+    .required("Phone is requied")
+    .matches(/^[0-9]+$/g, "Phone must be number"),
+  password: yup.string().required("Password is required"),
+  certification: yup.string().required("Password is required"),
+  birthday: yup.string().required("Password is required"),
 });
 const Signup = () => {
   let history = useHistory();
+  const classes = useStyle();
+  const { container, formControl } = classes;
   const formik = useFormik({
     initialValues: {
-      taiKhoan: "",
-      matKhau: "",
+      first_name: "",
+      last_name: "",
       email: "",
-      soDt: "",
-      maNhom: "GP01",
-      hoTen: "",
+      phone: "",
+      password: "",
+      certification: [],
+      gender: true,
+      skill: [],
+      type: "ADMIN",
+      birthday: new Date(),
     },
-    validationSchema: schema,
-    validateOnMount: true,
+    // validationSchema: schema,
+    // validateOnMount: true,
   });
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   formik.setTouched({
-  //     taiKhoan: true,
-  //     email: true,
-  //     soDt: true,
-  //     matKhau: true,
-  //     hoten: true,
-  //   });
-  //   if (!formik.isValid) return;
-  //   try {
-  //     const res = await axios({
-  //       url: "http://movieapi.cyberlearn.vn/api/QuanLyNguoiDung/DangKy",
-  //       method: "POST",
-  //       data: formik.values,
-  //     });
-  //     alert("Đăng kí thành công");
-  //     history.push("/signin");
-  //   } catch (err) {
-  //     console.error(err.response);
-  //     alert(err.response.data.content);
-  //   }
-  // };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    formik.setTouched({
+      taiKhoan: true,
+      email: true,
+      soDt: true,
+      matKhau: true,
+      hoten: true,
+    });
+    if (!formik.isValid) return;
+    const newUser = {
+      ...formik.values,
+      birthday: format(formik.values.birthday, "dd/MM/yyyy"),
+    };
+
+    console.log(newUser);
+
+    const formData = new FormData();
+
+    for (let key in newUser) {
+      formData.append(key, newUser[key]);
+    }
+
+    try {
+      const res = await axios({
+        method: "POST",
+        url: "https://fiverr.cybersoft.edu.vn/api/auth/signup",
+        data: formData,
+        headers: {
+          tokenByClass:
+            "Bearer " +
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZW5Mb3AiOiJCb290Y2FtcCAwOSIsIkhldEhhblN0cmluZyI6IjI3LzAxLzIwMjIiLCJIZXRIYW5UaW1lIjoiMTY0MzI0MTYwMDAwMCIsIm5iZiI6MTYxNjM0NjAwMCwiZXhwIjoxNjQzMzg5MjAwfQ.NEQRF8SKORq7R7kYbYCCO9ZZXYxTWlbaTc2wxXWMfiw",
+        },
+      });
+      console.log(res);
+    } catch (err) {
+      console.log(err);
+    }
+  };
   const paperStyle = { padding: 20, width: 300, margin: "0 auto" };
   const headerStyle = { margin: 0 };
   const avatarStyle = { backgroundColor: "#1bbd7e" };
   const marginTop = { marginTop: 5 };
+  const handleChangeDate = (date) => {
+    formik.setFieldValue("birthday", date);
+  };
+  const handleChangeSwitch = (e) => {
+    formik.setFieldValue(e.target.name, e.target.checked);
+  };
   return (
     <Grid>
       <Paper style={paperStyle}>
@@ -82,38 +117,27 @@ const Signup = () => {
         <form>
           <TextField
             fullWidth
-            name="taiKhoan"
-            label="Tài khoản"
+            name="first_name"
+            label="First name"
             variant="outlined"
             onChange={formik.handleChange}
             style={marginTop}
           />
-          {formik.touched.taiKhoan && (
-            <Typography color="error">{formik.errors.taiKhoan}</Typography>
+          {formik.touched.first_name && (
+            <Typography color="error">{formik.errors.first_name}</Typography>
           )}
           <TextField
             fullWidth
-            name="matKhau"
-            type="password"
-            label="Mật khẩu"
+            name="last_name"
+            label="Last name"
             variant="outlined"
             onChange={formik.handleChange}
             style={marginTop}
           />
-          {formik.touched.matKhau && (
-            <Typography color="error">{formik.errors.matKhau}</Typography>
+          {formik.touched.last_name && (
+            <Typography color="error">{formik.errors.last_name}</Typography>
           )}
-          <TextField
-            name="hoTen"
-            fullWidth
-            label="Họ Tên"
-            variant="outlined"
-            onChange={formik.handleChange}
-            style={marginTop}
-          />
-          {formik.touched.hoTen && (
-            <Typography color="error">{formik.errors.hoTen}</Typography>
-          )}
+
           <TextField
             fullWidth
             name="email"
@@ -128,16 +152,61 @@ const Signup = () => {
           )}
           <TextField
             fullWidth
-            name="soDt"
-            label="Số ĐT"
+            name="password"
+            type="password"
+            label="Mật khẩu"
             variant="outlined"
             onChange={formik.handleChange}
             style={marginTop}
           />
-          {formik.touched.soDt && (
-            <Typography color="error">{formik.errors.soDt}</Typography>
+          {formik.touched.password && (
+            <Typography color="error">{formik.errors.password}</Typography>
           )}
-
+          <TextField
+            fullWidth
+            name="phone"
+            label="Phone"
+            variant="outlined"
+            onChange={formik.handleChange}
+            style={marginTop}
+          />
+          {formik.touched.phone && (
+            <Typography color="error">{formik.errors.phone}</Typography>
+          )}
+          <TextField
+            fullWidth
+            name="skill"
+            label="Skill"
+            variant="outlined"
+            onChange={formik.handleChange}
+            style={marginTop}
+          />
+          {formik.touched.skill && (
+            <Typography color="error">{formik.errors.skill}</Typography>
+          )}
+          <TextField
+            fullWidth
+            name="certification"
+            label="Certifiction"
+            variant="outlined"
+            onChange={formik.handleChange}
+            style={marginTop}
+          />
+          {formik.touched.certification && (
+            <Typography color="error">{formik.errors.certification}</Typography>
+          )}
+          <MuiPickersUtilsProvider className={formControl} utils={DateFnsUtils}>
+            <KeyboardDatePicker
+              fullWidth
+              disableToolbar
+              variant="inline"
+              inputVariant="outlined"
+              format="MM/dd/yyyy"
+              value={formik.values.birthday}
+              onChange={handleChangeDate}
+              label="Birthday"
+            />
+          </MuiPickersUtilsProvider>
           <Button
             style={marginTop}
             type="submit"
