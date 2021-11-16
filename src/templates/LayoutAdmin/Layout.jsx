@@ -11,11 +11,11 @@ import {
 } from "@ant-design/icons";
 import { NavLink } from "react-router-dom";
 import _ from "lodash";
+import { USER_LOGIN } from "../../util/settings/config";
 const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
 
 const AdminTemplate = (props) => {
-  //path, exact, Component
 
   const { Component, ...restProps } = props;
   const { userLogin } = useSelector(state => state.manageUserReducer);
@@ -31,16 +31,16 @@ const AdminTemplate = (props) => {
     window.scrollTo(0, 0);
   });
 
-  // if (!localStorage.getItem(USER_LOGIN)) {
-  //     alert('Bạn không có quyền truy cập vào trang này !')
-  //     return <Redirect to='/' />
-  // }
+  if (!localStorage.getItem(USER_LOGIN)) {
+      alert('You do not have permission to access this page !')
+      return <Redirect to='/' />
+  }
 
-  // if (userLogin.maLoaiNguoiDung !== 'QuanTri') {
-  //     alert('Bạn không có quyền truy cập vào trang này !')
-  //     return <Redirect to='/' />
+  if (userLogin.user.role !== 'ADMIN') {
+      alert('You do not have permission to access this page !')
+      return <Redirect to='/' />
 
-  // }
+  }
 
   // const operations = <Fragment>
   //     {!_.isEmpty(userLogin) ? <Fragment> <button onClick={() => {

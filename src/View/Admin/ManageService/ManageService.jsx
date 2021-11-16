@@ -12,7 +12,6 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { deleteServiceAction, getServiceListAction } from "../../../store/action/ManageServiceAction";
-const { Search } = Input;
 
 export default function ManageService(props) {
   const {serviceList} = useSelector((state) => {
