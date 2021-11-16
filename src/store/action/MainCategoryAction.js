@@ -35,6 +35,8 @@ export const deleteMainCategory = (mainCategoryId) => {
 
       alert("Delete Main Category Successfully !!");
       dispatch(getMainCategory());
+      history.push("/admin/maincategory");
+
     } catch (err) {
       console.log(err);
     }
@@ -55,6 +57,7 @@ export const addNewMainCategoryAction = (formData) => {
       });
       alert("Add New Main Category Successfully");
       dispatch(getMainCategory());
+      history.push("/admin/maincategory");
     } catch (errors) {
       console.log(errors.response?.data);
     }
@@ -74,7 +77,6 @@ export const editMainCategoryAction = (mainCategoryId, formData) => {
         },
       });
       alert("Update Main Category Successfully");
-      console.log("result", result.data);
 
       dispatch(getMainCategory());
       history.push("/admin/maincategory");
