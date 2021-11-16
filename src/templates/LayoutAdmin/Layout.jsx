@@ -11,7 +11,8 @@ import {
 } from "@ant-design/icons";
 import { NavLink } from "react-router-dom";
 import _ from "lodash";
-import { USER_LOGIN } from "../../util/settings/config";
+import { TOKEN, USER_LOGIN } from "../../util/settings/config";
+import { history } from "../../App";
 const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
 
@@ -23,7 +24,6 @@ const AdminTemplate = (props) => {
   const [collapsed, setCollapsed] = useState(false);
 
   const onCollapse = (collapsed) => {
-    // console.log(collapsed);
     setCollapsed(collapsed);
   };
 
@@ -42,16 +42,6 @@ const AdminTemplate = (props) => {
 
   }
 
-  // const operations = <Fragment>
-  //     {!_.isEmpty(userLogin) ? <Fragment> <button onClick={() => {
-  //         history.push('/profile')
-  //     }}> <div style={{ width: 50, height: 50, display: 'flex', justifyContent: 'center', alignItems: 'center' }} className="text-2xl ml-5 rounded-full bg-red-200">{userLogin.taiKhoan.substr(0, 1)}</div>Hello ! {userLogin.taiKhoan}</button> <button onClick={() => {
-  //         localStorage.removeItem(USER_LOGIN);
-  //         localStorage.removeItem(TOKEN);
-  //         history.push('/home');
-  //         window.location.reload();
-  //     }} className="text-blue-800">Đăng xuất</button> </Fragment> : ''}
-  // </Fragment>
 
   return (
     <Route
@@ -105,7 +95,6 @@ const AdminTemplate = (props) => {
                   className="site-layout-background"
                   style={{ padding: 0 }}
                 >
-                  {/* <div className="text-right pr-10 pt-1">{operations}</div> */}
                   <div className="text-right pr-10 pt-1">Hello</div>
                 </Header>
                 <Content style={{ margin: "0 16px" }}>
