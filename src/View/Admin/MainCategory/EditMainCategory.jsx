@@ -72,7 +72,7 @@ const EditMainCategory = (props) => {
         </Form.Item>
 
         <Form.Item label="Action">
-          <button type="submit" className="bg-blue-300 text-white p-2">
+          <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
             Edit Main Category
           </button>
         </Form.Item>
