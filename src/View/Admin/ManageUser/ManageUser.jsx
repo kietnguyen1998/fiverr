@@ -96,13 +96,6 @@ export default function ManageUser(props) {
   ];
   const data = userList;
 
-    const onSearch = value => {
-
-      console.log(value);
-      dispatch(searchUserAction(value));
-
-  };
-
   function onChange(pagination, filters, sorter, extra) {
     console.log("params", pagination, filters, sorter, extra);
   }
@@ -120,14 +113,7 @@ export default function ManageUser(props) {
       >
         Add New User{" "}
       </Button>
-      <Search
-                className="mb-5"
-                placeholder="input search text"
-                enterButton={<SearchOutlined />}
-                size="large"
-
-                onSearch={onSearch}
-            />
+     
 
       <Table
         columns={columns}

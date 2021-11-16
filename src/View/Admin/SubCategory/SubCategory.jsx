@@ -88,13 +88,7 @@ const SubCategory = (props) => {
   ];
   const data = subCategoryList;
 
-  //   const onSearch = value => {
 
-  //     console.log(value);
-  //     //Gọi api layDanhSachPhim
-  //     dispatch(layDanhSachPhimAction(value));
-
-  // };
 
   function onChange(pagination, filters, sorter, extra) {
     console.log("params", pagination, filters, sorter, extra);
@@ -113,14 +107,7 @@ const SubCategory = (props) => {
       >
         Add New Sub Category{" "}
       </Button>
-      {/* <Search
-                className="mb-5"
-                placeholder="input search text"
-                enterButton={<SearchOutlined />}
-                size="large"
-
-                onSearch={onSearch}
-            /> */}
+      
 
       <Table
         columns={columns}

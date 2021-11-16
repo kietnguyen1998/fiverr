@@ -53,7 +53,16 @@ const EditSubCategory = (props) => {
         size={componentSize}
       >
         <h3 className="text-2xl text-center">Edit Sub Category</h3>
-        <Form.Item label="Name">
+        <Form.Item
+          label="Name"
+          name="name"
+          rules={[
+            {
+              required: true,
+              message: "Please input sub category name!",
+            },
+          ]}
+        >
           <Input name="name" onChange={formik.handleChange} />
         </Form.Item>
 
