@@ -72,7 +72,7 @@ export const deleteUserAction = (id) => {
   return async (dispatch) => {
     try {
       const result = await axios({
-        url: `${DOMAIN}/api/users`,
+        url: `${DOMAIN}/api/users/${id}`,
         method: "DELETE",
 
         headers: {
